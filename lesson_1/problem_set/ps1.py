@@ -1,6 +1,6 @@
 ###########################
 # 6.00.2x Problem Set 1: Space Cows 
-
+from collections import OrderedDict
 from ps1_partition import get_partitions
 import time
 
@@ -55,8 +55,25 @@ def greedy_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    sortedCows = OrderedDict(sorted(cows.items(), key=lambda item: item[1], reverse= True))
+    allShippedCows = []
+      
+    while sortedCows:
+        shippedCows = []
+        tempLimit = limit
+        
+        for n,v in list(sortedCows.items()):
+            if v <= tempLimit:
+                shippedCows.append(n)
+                tempLimit -= v
+                del sortedCows[n]
+                
+        allShippedCows.append(shippedCows)
+            
+    return allShippedCows
 
+
+# print(greedy_cow_transport({'Horns': 50, 'Louis': 45, 'Polaris': 20, 'Lotus': 10, 'Clover': 5, 'Patches': 60, 'Milkshake': 75, 'MooMoo': 85, 'Miss Bella': 15, 'Muscles': 65}, 100))
 
 # Problem 2
 def brute_force_cow_transport(cows,limit=10):
@@ -80,7 +97,9 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    answer = get_partitions(list(cows.keys()))
+    for item in answer:
+        print(item)
 
         
 # Problem 3
@@ -108,10 +127,10 @@ lines to print the result of your problem.
 """
 
 cows = load_cows("ps1_cow_data.txt")
-limit=100
-print(cows)
+limit=10
+# print(cows)
 
-print(greedy_cow_transport(cows, limit))
+# print(greedy_cow_transport(cows, limit))
 print(brute_force_cow_transport(cows, limit))
 
 
