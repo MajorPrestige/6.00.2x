@@ -97,11 +97,50 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    answer = get_partitions(list(cows.keys()))
-    for item in answer:
-        print(item)
+    
+    
+    all_partitions = get_partitions(list(cows.keys()))
 
-        
+    # Filter valid partitions based on weight limit
+    
+    
+    '''
+    
+    valid_partitions = [
+        partition for partition in all_partitions
+        if all(sum(cows[cow] for cow in trip) <= limit for trip in partition)
+    ]
+    
+    
+    '''
+    
+    valid_partitions = []
+
+    for partition in all_partitions:
+        is_valid_partition = True
+
+        for trip in partition:
+            total_weight = 0
+    
+            for cow in trip:
+                total_weight += cows[cow]
+    
+            if total_weight > limit:
+                is_valid_partition = False
+                break
+    
+        if is_valid_partition:
+            valid_partitions.append(partition)
+    
+
+    # Find the partition with the minimum number of trips
+    min_trips_partition = min(valid_partitions, key=len)
+
+    return min_trips_partition
+            
+print(brute_force_cow_transport({'Boo': 20, 'Miss Bella': 25, 'MooMoo': 50, 'Lotus': 40, 'Horns': 25, 'Milkshake': 40}, 100))
+# print(greedy_cow_transport({'Boo': 20, 'Miss Bella': 25, 'MooMoo': 50, 'Lotus': 40, 'Horns': 25, 'Milkshake': 40}, 100))
+
 # Problem 3
 def compare_cow_transport_algorithms():
     """
@@ -117,8 +156,13 @@ def compare_cow_transport_algorithms():
     Does not return anything.
     """
     # TODO: Your code here
-    pass
-
+    start_time = time.time()
+    cows = load_cows("ps1_cow_data.txt")
+    limit=10
+    # greedy_cow_transport(cows, limit)
+    brute_force_cow_transport(cows, limit)
+    end_time = time.time()
+    return end_time - start_time
 
 """
 Here is some test data for you to see the results of your algorithms with. 
@@ -131,6 +175,7 @@ limit=10
 # print(cows)
 
 # print(greedy_cow_transport(cows, limit))
-print(brute_force_cow_transport(cows, limit))
+# print(brute_force_cow_transport(cows, limit))
 
+# print(compare_cow_transport_algorithms())
 
