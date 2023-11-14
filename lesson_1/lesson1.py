@@ -23,4 +23,30 @@ def fibonacci_dynamic_programming(n):
 
 n = 10
 result = fibonacci_dynamic_programming(n)
+# print(f"Число Фибоначчи для n={n}: {result}")
+
+
+def fibonacci_recursive(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+
+# Пример использования
+n = 10
+result = fibonacci_recursive(n)
+# print(f"Число Фибоначчи для n={n}: {result}")
+
+
+def fibonacci_iterative(n):
+    fib_array = [0, 1]
+
+    for i in range(2, n + 1):
+        fib_array.append(fib_array[i - 1] + fib_array[i - 2])
+
+    return fib_array[n]
+
+# Пример использования
+n = 10
+result = fibonacci_iterative(n)
 print(f"Число Фибоначчи для n={n}: {result}")
