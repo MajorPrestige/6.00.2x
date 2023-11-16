@@ -92,7 +92,6 @@ def dist2():
 
 
 import matplotlib.pyplot as plt
-import random
 
 def simulate_population_growth(initial_population, num_generations, reproduction_probability):
     """
@@ -139,8 +138,8 @@ def plot_population_growth(population):
     plt.show()
 
 # Parameters
-initial_population = 5
-num_generations = 10
+initial_population = 10
+num_generations = 20
 reproduction_probability = 0.8
 
 # Simulate population growth
@@ -148,6 +147,30 @@ population_history = simulate_population_growth(initial_population, num_generati
 
 # Plot the results
 plot_population_growth(population_history)
+
+
+#%%
+
+random.seed(9001)
+for i in range(random.randint(1, 10)):
+    print(random.randint(1, 10))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
