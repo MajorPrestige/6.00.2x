@@ -15,9 +15,10 @@ import pylab
 # If you get a "Bad magic number" ImportError, you are not using Python 3.5 
 
 # For Python 3.6:
-from ps2_verify_movement36 import testRobotMovement
+from ps2_verify_movement311 import testRobotMovement
 # If you get a "Bad magic number" ImportError, you are not using Python 3.6
 
+random.seed(0)
 
 # === Provided class Position
 class Position(object):
