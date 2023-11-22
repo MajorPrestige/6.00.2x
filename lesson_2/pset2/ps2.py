@@ -338,7 +338,7 @@ class RandomWalkRobot(Robot):
             newDirection = random.randrange(0, 360)
             self.setRobotDirection(newDirection)
 
-testRobotMovement(RandomWalkRobot, RectangularRoom)
+# testRobotMovement(RandomWalkRobot, RectangularRoom)
 
 
 def showPlot1(title, x_label, y_label):
@@ -361,6 +361,8 @@ def showPlot1(title, x_label, y_label):
     pylab.show()
 
     
+# showPlot1('title', 'number of robots', 'time to clean')
+
 def showPlot2(title, x_label, y_label):
     """
     What information does the plot produced by this function tell you?
@@ -382,6 +384,8 @@ def showPlot2(title, x_label, y_label):
     pylab.ylabel(y_label)
     pylab.show()
     
+showPlot2('title', 'area', 'time to clean')
+
 
 # === Problem 6
 # NOTE: If you are running the simulation, you will have to close it 
