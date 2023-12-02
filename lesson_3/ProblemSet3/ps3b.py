@@ -315,7 +315,9 @@ class ResistantVirus(SimpleVirus):
         else:
             raise NoChildException("This virus particle does not reproduce.")
             
-            
+#
+# PROBLEM 4
+#
 
 class TreatedPatient(Patient):
     """
@@ -431,10 +433,10 @@ class TreatedPatient(Patient):
 
 
 #
-# PROBLEM 4
+# PROBLEM 5
 #
-def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
-                       mutProb, numTrials):
+
+def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances, mutProb, numTrials):
     """
     Runs simulations and plots graphs for problem 5.
 
@@ -453,7 +455,41 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     mutProb: mutation probability for each ResistantVirus particle
              (a float between 0-1). 
     numTrials: number of simulation runs to execute (an integer)
-    
     """
+    total_avg_populations = [0] * 300
+    resistant_avg_populations = [0] * 300
 
-    # TODO
+    for _ in range(numTrials):
+        total_trial_populations = []
+        resistant_trial_populations = []
+
+        viruses = [ResistantVirus(maxBirthProb, clearProb, resistances, mutProb) for _ in range(numViruses)]
+        patient = TreatedPatient(viruses, maxPop)
+
+        for _ in range(150):
+            patient.update()
+            total_trial_populations.append(patient.getTotalPop())
+            resistant_trial_populations.append(patient.getResistPop(['guttagonol']))
+
+        patient.addPrescription('guttagonol')
+
+        for _ in range(150):
+            patient.update()
+            total_trial_populations.append(patient.getTotalPop())
+            resistant_trial_populations.append(patient.getResistPop(['guttagonol']))
+
+        for i in range(300):
+            total_avg_populations[i] += total_trial_populations[i]
+            resistant_avg_populations[i] += resistant_trial_populations[i]
+
+    total_avg_populations = [avg / numTrials for avg in total_avg_populations]
+    resistant_avg_populations = [avg / numTrials for avg in resistant_avg_populations]
+
+    pylab.plot(range(300), total_avg_populations, label="Total Virus Population")
+    pylab.plot(range(300), resistant_avg_populations, label="Resistant Virus Population")
+    pylab.title("ResistantVirus simulation with drug (guttagonol)")
+    pylab.xlabel("Time Steps")
+    pylab.ylabel("Average Virus Population")
+    pylab.legend(loc="best")
+    pylab.show()
+
