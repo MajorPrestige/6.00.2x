@@ -4,6 +4,23 @@ import random
 import pylab
 random.seed(0)
 
+
+''' 
+Begin helper code
+'''
+
+class NoChildException(Exception):
+    """
+    NoChildException is raised by the reproduce() method in the SimpleVirus
+    and ResistantVirus classes to indicate that a virus particle does not
+    reproduce. You can use NoChildException as is, you do not need to
+    modify/add any code.
+    """
+
+'''
+End helper code
+'''
+
 #
 # PROBLEM 1
 #
@@ -492,4 +509,6 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     pylab.ylabel("Average Virus Population")
     pylab.legend(loc="best")
     pylab.show()
+
+
 
