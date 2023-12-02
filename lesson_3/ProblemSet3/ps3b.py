@@ -162,8 +162,7 @@ class Patient(object):
 #
 # PROBLEM 2
 #
-def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
-                          numTrials):
+def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb, numTrials):
     """
     Run the simulation and plot the graph for problem 3 (no drugs are used,
     viruses do not have any drug resistance).    
@@ -177,10 +176,30 @@ def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
     clearProb: Maximum clearance probability (a float between 0-1)
     numTrials: number of simulation runs to execute (an integer)
     """
+    average_populations = [0] * 300
 
-    # TODO
+    for trial in range(numTrials):
+        trial_populations = []
 
+        viruses = [SimpleVirus(maxBirthProb, clearProb) for _ in range(numViruses)]
+        patient = Patient(viruses, maxPop)
 
+        for step in range(300):
+            patient.update()
+            trial_populations.append(patient.getTotalPop())
+
+        for i in range(300):
+            average_populations[i] += trial_populations[i]
+
+    for i in range(300):
+        average_populations[i] /= numTrials
+    
+    pylab.plot(range(300), average_populations, label="SimpleVirus")
+    pylab.title("SimpleVirus simulation")
+    pylab.xlabel("Time Steps")
+    pylab.ylabel("Average Virus Population")
+    pylab.legend(loc="best")
+    pylab.show()
 
 #
 # PROBLEM 3
