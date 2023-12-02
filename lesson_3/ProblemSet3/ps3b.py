@@ -511,4 +511,14 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     pylab.show()
 
 
+numViruses = 100
+maxPop = 1000
+maxBirthProb = 0.1
+clearProb = 0.05
+resistances = {'guttagonol': False}
+mutProb = 0.005
+numTrials = 100
+
+simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances, mutProb, numTrials)
+
 
