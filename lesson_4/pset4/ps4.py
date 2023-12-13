@@ -129,9 +129,19 @@ def generate_models(x, y, degs):
     Returns:
         a list of numpy arrays, where each array is a 1-d array of coefficients
         that minimizes the squared error of the fitting polynomial
-    """
-    # TODO
-    pass
+    """    
+    models = []
+    for deg in degs:
+        model = np.polyfit(x, y, deg)
+        models.append(model)
+    return models
+
+# Example usage:
+x_example = [1961, 1962, 1963]
+y_example = [4.4, 5.5, 6.6]
+degs_example = [1, 2]
+# models_example = generate_models(x_example, y_example, degs_example)
+# print(models_example)
 
 # Problem 2
 def r_squared(y, estimated):
@@ -144,7 +154,13 @@ def r_squared(y, estimated):
         a float for the R-squared error term
     """
     # TODO
-    pass
+    mean = sum(y) / len(y)
+    numerator = sum((y[i] - estimated[i]) ** 2 for i in range(len(y)))
+    denominator = sum((y[i] - mean) ** 2 for i in range(len(y)))
+    r_squared = 1 - (numerator / denominator)
+    return r_squared
+    
+print(r_squared([32.0, 42.0, 31.3, 22.0, 33.0], [32.3, 42.1, 31.2, 22.1, 34.0])) # 0.9944
 
 # Problem 3
 def evaluate_models_on_training(x, y, models):
