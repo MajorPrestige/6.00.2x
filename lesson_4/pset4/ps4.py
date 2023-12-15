@@ -1,6 +1,7 @@
 import numpy as np
 import pylab
 import re
+import matplotlib.pyplot as plt
 
 # cities in our weather data
 CITIES = [
@@ -137,9 +138,9 @@ def generate_models(x, y, degs):
     return models
 
 # Example usage:
-x_example = [1961, 1962, 1963]
-y_example = [4.4, 5.5, 6.6]
-degs_example = [1, 2]
+# x_example = [1961, 1962, 1963]
+# y_example = [4.4, 5.5, 6.6]
+# degs_example = [1, 2]
 # models_example = generate_models(x_example, y_example, degs_example)
 # print(models_example)
 
@@ -160,9 +161,11 @@ def r_squared(y, estimated):
     r_squared = 1 - (numerator / denominator)
     return r_squared
     
-print(r_squared([32.0, 42.0, 31.3, 22.0, 33.0], [32.3, 42.1, 31.2, 22.1, 34.0])) # 0.9944
+# print(r_squared([32.0, 42.0, 31.3, 22.0, 33.0], [32.3, 42.1, 31.2, 22.1, 34.0])) # 0.9944
 
 # Problem 3
+
+raw_data = Climate('data.csv')
 def evaluate_models_on_training(x, y, models):
     """
     For each regression model, compute the R-square for this model with the
@@ -184,26 +187,49 @@ def evaluate_models_on_training(x, y, models):
     Returns:
         None
     """
-    # TODO
-    pass
+    for model in models:
+        predicted_values = np.polyval(model, x)
+        r_squared_value = r_squared(y, predicted_values)
+
+        # Print the R^2 value
+        print(f'R^2 value: {r_squared_value:.3f}')
+
+        # Plotting code remains the same
+        plt.scatter(x, y, color='blue', label='Data Points')
+        plt.plot(x, predicted_values, color='red', label='Best Fit Curve')
+        plt.xlabel('Year')
+        plt.ylabel('Temperature')
+        plt.title(f'Degree {len(model) - 1} Model\nR-squared: {r_squared_value:.3f}')
+        plt.legend()
+        plt.show()
+
+# # Problem 3
+# y = []
+# x = INTERVAL_1
+# for year in INTERVAL_1:
+#     y.append(raw_data.get_daily_temp('BOSTON', 1, 10, year))
+# models = generate_models(x, y, [1])
+# evaluate_models_on_training(x, y, models)
 
 
-### Begining of program
-raw_data = Climate('data.csv')
-
-# Problem 3
-y = []
-x = INTERVAL_1
-for year in INTERVAL_1:
-    y.append(raw_data.get_daily_temp('BOSTON', 1, 10, year))
-models = generate_models(x, y, [1])
-evaluate_models_on_training(x, y, models)
-
-
-# Problem 4: FILL IN MISSING CODE TO GENERATE y VALUES
+# Problem 4
 x1 = INTERVAL_1
 x2 = INTERVAL_2
 y = []
-# MISSING LINES
-models = generate_models(x, y, [1])    
-evaluate_models_on_training(x, y, models)
+
+# Generate y values for the average annual temperature in Boston
+for year in INTERVAL_1:
+    y.append(np.mean(raw_data.get_yearly_temp('BOSTON', year)))
+
+# Generate models and evaluate
+models = generate_models(x1, y, [1])
+evaluate_models_on_training(x1, y, models)
+
+
+# # Problem 4: FILL IN MISSING CODE TO GENERATE y VALUES
+# x1 = INTERVAL_1
+# x2 = INTERVAL_2
+# y = []
+# # MISSING LINES
+# models = generate_models(x, y, [1])    
+# evaluate_models_on_training(x, y, models)
