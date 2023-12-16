@@ -496,6 +496,36 @@ result = find_combination(choices, total)
 print(result)
 
 
+#%%
+
+
+import os
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+import numpy as np
+
+def find_combination(choices, total):
+    min_sum = float()
+    best = None
+
+    def get_result(combination):
+        return np.array([1 if choice in combination else 0 for choice in choices])
+
+    for r in range(1, len(choices) + 1):
+        for i in range(len(choices)):
+            combination = choices[i:i + r]
+            cur_sum = sum(combination)
+            if cur_sum == total:
+                return get_result(combination)
+            elif cur_sum < total and cur_sum < min_sum:
+                min_sum = cur_sum
+                best = combination
+
+    if best is not None:
+        return get_result(best)
+    else:
+        return get_result([choice for choice in choices if choice <= total])
+
+
 
 
 
