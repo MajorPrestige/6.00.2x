@@ -545,6 +545,29 @@ def fizzBuzz(n):
 fizzBuzz(15)
 
 
+#%%
 
+from itertools import permutations
+
+def rearrangeWord(word):
+    letter_array = sorted([letter for letter in word])
+    unique_rearrange_words = set()
+
+    for permuted_letters in permutations(letter_array):
+        rearranged_word = ''.join(permuted_letters)
+        unique_rearrange_words.add(rearranged_word)
+        
+    sorted_unique_rearrange_words = sorted(unique_rearrange_words)
+
+    if sorted_unique_rearrange_words[-1] == word:
+        return "no answer"    
+    
+    return sorted_unique_rearrange_words[sorted_unique_rearrange_words.index(word) + 1]
+            
+    
+    
+
+
+print(rearrangeWord('zyx'))
 
 
